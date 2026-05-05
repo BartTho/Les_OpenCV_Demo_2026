@@ -22,7 +22,7 @@ def select_color(event, x, y, flags, param):
         print(f"Selected HSV: {selected_color}")
 
 # Open webcam
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Cannot open camera")

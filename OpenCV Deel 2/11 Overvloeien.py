@@ -1,9 +1,9 @@
 import numpy as np
 import cv2
 
-img = cv2.imread('opencv.jpg')
+img = cv2.imread('Afbeeldingen/logo.png')
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 while(True):
     ret, frame = cap.read()
     img_resized = cv2.resize(img, (frame.shape[1], frame.shape[0]))

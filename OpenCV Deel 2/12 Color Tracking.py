@@ -6,19 +6,12 @@ selected_color = None
 hsv_lower = None
 hsv_upper = None
 
-def nothing(x):
-    pass
-
 def select_color(event, x, y, flags, param):
     global selected_color
     if event == cv2.EVENT_LBUTTONDOWN:
         # Get the HSV value at the clicked point
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         selected_color = hsv_frame[y, x]
-        # Set initial trackbar positions
-        cv2.setTrackbarPos('Hue Range', 'Controls', 10)
-        cv2.setTrackbarPos('Sat Range', 'Controls', 50)
-        cv2.setTrackbarPos('Val Range', 'Controls', 50)
         print(f"Selected HSV: {selected_color}")
 
 # Open webcam
@@ -29,14 +22,12 @@ if not cap.isOpened():
     exit()
 
 cv2.namedWindow('Frame')
-cv2.namedWindow('Controls')
 cv2.namedWindow('Mask')
 cv2.setMouseCallback('Frame', select_color)
 
-# Create trackbars
-cv2.createTrackbar('Hue Range', 'Controls', 10, 50, nothing)
-cv2.createTrackbar('Sat Range', 'Controls', 50, 100, nothing)
-cv2.createTrackbar('Val Range', 'Controls', 50, 100, nothing)
+delta_h = 10
+delta_s = 50
+delta_v = 50
 
 while True:
     ret, frame = cap.read()
@@ -45,10 +36,6 @@ while True:
         break
 
     if selected_color is not None:
-        # Get trackbar values
-        delta_h = cv2.getTrackbarPos('Hue Range', 'Controls')
-        delta_s = cv2.getTrackbarPos('Sat Range', 'Controls')
-        delta_v = cv2.getTrackbarPos('Val Range', 'Controls')
         
         hue = selected_color[0]
         sat = selected_color[1]
